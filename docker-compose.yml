@@ -9,7 +9,7 @@ services:
       - ./frontend:/app
       - /app/node_modules
     environment:
-      NUXT_PUBLIC_API_URL: http://localhost:8000/api
+      NUXT_PUBLIC_API_URL: http://laravel:8000/api
     depends_on:
       - backend
 
