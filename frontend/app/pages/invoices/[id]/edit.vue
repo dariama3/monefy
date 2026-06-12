@@ -76,16 +76,26 @@ const onSubmit = handleSubmit(async (values) => {
         <div>
           <h3 class="text-base font-semibold leading-7 text-gray-900">Edit Invoice {{ invoice.number }}</h3>
         </div>
-        <NuxtLink :to="`/invoices/${id}`" class="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-          Cancel
-        </NuxtLink>
+        <div class="flex gap-x-3">
+          <NuxtLink :to="`/invoices/${id}`" class="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+            Cancel
+          </NuxtLink>
+          <button
+            type="submit"
+            form="edit-invoice-form"
+            :disabled="!isEditable || isSubmitting"
+            class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:bg-indigo-300 disabled:cursor-not-allowed"
+          >
+            {{ isSubmitting ? 'Saving...' : 'Save Changes' }}
+          </button>
+        </div>
       </div>
 
       <div v-if="!isEditable" class="mt-4 p-4 bg-yellow-50 text-yellow-700 rounded-md">
         This invoice cannot be edited because it is not in pending status.
       </div>
 
-      <form @submit="onSubmit" class="mt-6 space-y-6 max-w-lg">
+      <form id="edit-invoice-form" @submit="onSubmit" class="mt-6 space-y-6 max-w-lg">
         <div>
           <label for="net_amount" class="block text-sm font-medium leading-6 text-gray-900">Net Amount</label>
           <div class="mt-2">
@@ -130,15 +140,6 @@ const onSubmit = handleSubmit(async (values) => {
           </div>
         </div>
 
-        <div class="flex justify-end pt-4">
-          <button
-            type="submit"
-            :disabled="!isEditable || isSubmitting"
-            class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:bg-indigo-300 disabled:cursor-not-allowed"
-          >
-            {{ isSubmitting ? 'Saving...' : 'Save Changes' }}
-          </button>
-        </div>
       </form>
     </div>
   </div>
